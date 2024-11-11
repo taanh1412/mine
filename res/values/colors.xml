@@ -13,8 +13,14 @@
     <color name="text_light">#FFFFFF</color>
     <color name="text_purple">#9c89ec</color>
     <color name="text_dark">#1c1b1f</color>
-    <color name="tile_background">#333333</color>
     <color name="tile_text_color">#FFFFFF</color>
     <color name="revealed_tile_background">#CCCCCC</color>
     <color name="mine_text_color">#FF0000</color>
+    <color name="background_color">#2B2B2B</color>
+    <color name="tile_background">#3D3D3D</color>
+    <color name="tile_revealed">#8D8D8D</color>
+    <color name="mine_color">#FF0000</color>
+    <color name="flag_color">#FFD700</color>
+    <color name="number_color">#FFFFFF</color>
+
 </resources>

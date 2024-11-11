@@ -7,14 +7,16 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@color/background_dark"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:layout_marginTop="500dp">
 
         <!-- Title with Icon -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:layout_marginTop="100dp">
 
             <ImageView
                 android:layout_width="32dp"
@@ -25,7 +27,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ANTIMINE"
+                android:text="MINESWEEPER"
                 android:textColor="@color/text_light"
                 android:textSize="24sp"
                 android:layout_marginStart="8dp"
@@ -38,9 +40,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="CONTINUE"
-            android:textColor="@color/text_dark"
+            android:textColor="@color/text_light"
             android:background="@drawable/rounded_button_background"
             android:layout_marginVertical="12dp"
+            android:layout_marginTop="20dp"
             android:fontFamily="sans-serif-medium" />
 
         <!-- Difficulty Level Buttons -->
@@ -50,7 +53,7 @@
             android:layout_height="wrap_content"
             android:text="Easy"
             android:background="@drawable/rounded_button_background"
-            android:textColor="@color/text_dark"
+            android:textColor="@color/text_light"
             android:layout_marginVertical="8dp" />
 
         <Button
@@ -59,7 +62,7 @@
             android:layout_height="wrap_content"
             android:text="Intermediate"
             android:background="@drawable/rounded_button_background"
-            android:textColor="@color/text_dark"
+            android:textColor="@color/text_light"
             android:layout_marginVertical="8dp" />
 
         <Button
@@ -68,7 +71,7 @@
             android:layout_height="wrap_content"
             android:text="Expert"
             android:background="@drawable/rounded_button_background"
-            android:textColor="@color/text_dark"
+            android:textColor="@color/text_light"
             android:layout_marginVertical="8dp" />
 
         <!-- Bottom Settings (Themes, Controls, Settings) -->
