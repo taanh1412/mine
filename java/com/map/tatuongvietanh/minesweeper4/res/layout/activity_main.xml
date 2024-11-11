@@ -1,0 +1,107 @@
+<!-- res/layout/activity_main.xml -->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/background_dark"
+        android:padding="16dp"
+        android:layout_marginTop="500dp">
+
+        <!-- Title with Icon -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="100dp">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_settings"
+                app:tint="@color/text_light" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MINESWEEPER"
+                android:textColor="@color/text_light"
+                android:textSize="24sp"
+                android:layout_marginStart="8dp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+        <!-- Continue Button -->
+        <Button
+            android:id="@+id/continueButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CONTINUE"
+            android:textColor="@color/text_light"
+            android:background="@drawable/rounded_button_background"
+            android:layout_marginVertical="12dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif-medium" />
+
+        <!-- Difficulty Level Buttons -->
+        <Button
+            android:id="@+id/easyButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Easy"
+            android:background="@drawable/rounded_button_background"
+            android:textColor="@color/text_light"
+            android:layout_marginVertical="8dp" />
+
+        <Button
+            android:id="@+id/intermediateButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Intermediate"
+            android:background="@drawable/rounded_button_background"
+            android:textColor="@color/text_light"
+            android:layout_marginVertical="8dp" />
+
+        <Button
+            android:id="@+id/expertButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Expert"
+            android:background="@drawable/rounded_button_background"
+            android:textColor="@color/text_light"
+            android:layout_marginVertical="8dp" />
+
+        <!-- Bottom Settings (Themes, Controls, Settings) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="16dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_theme"
+                    app:tint="@color/text_purple" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="THEMES"
+                    android:textColor="@color/text_purple"
+                    android:textSize="12sp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</layout>
