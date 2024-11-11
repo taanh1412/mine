@@ -11,77 +11,79 @@
             android:id="@+id/headerBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:padding="16dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="25dp">
+            android:layout_marginTop="25dp"
+            android:gravity="center_horizontal">
 
-            <!-- Back Button -->
-            <ImageButton
-                android:id="@+id/backButton"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_back"
-                app:tint="@android:color/white" />
-
-            <!-- Centered Timer and Mine Counter -->
+            <!-- Back Button and Settings Button Row -->
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:layout_weight="1"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp">
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <!-- Back Button -->
+                <ImageButton
+                    android:id="@+id/backButton"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_back"
+                    app:tint="@android:color/white"
+                    />
 
                 <!-- Timer Text -->
                 <TextView
                     android:id="@+id/timerTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:layout_marginStart="16dp"
                     android:text="Time: 00:00"
                     android:textSize="16sp"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@android:color/white"
+                    android:gravity="center" />
 
-                <!-- Mine Counter Text -->
-                <TextView
-                    android:id="@+id/mineCounterTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Mines: 10"
-                    android:textSize="16sp"
-                    android:textColor="@android:color/holo_red_light"
-                    android:layout_marginTop="4dp" />
-
+                <!-- Settings Button -->
+                <ImageButton
+                    android:id="@+id/settingsButton"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_settings"
+                    app:tint="@android:color/white"
+                    android:layout_marginStart="16dp" />
             </LinearLayout>
 
-            <!-- Settings Button -->
-            <ImageButton
-                android:id="@+id/settingsButton"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_settings"
-                app:tint="@android:color/white" />
+            <!-- Mine Counter Below Timer -->
+            <TextView
+                android:id="@+id/mineCounterTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mines: 10"
+                android:textSize="16sp"
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:layout_marginTop="8dp"
+                android:paddingTop="4dp" />
+
         </LinearLayout>
 
-        <!-- Game Status Text -->
+        <!-- Score Display (Replacing Game Status) -->
         <TextView
-            android:id="@+id/gameStatusTextView"
+            android:id="@+id/scoreTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Game in Progress"
+            android:text="Score: 0"
             android:textSize="18sp"
             android:textColor="@android:color/white"
             app:layout_constraintTop_toBottomOf="@id/headerBar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="16dp" />
 
         <!-- Game Grid (Centered) -->
         <GridLayout
@@ -92,7 +94,7 @@
             android:padding="8dp"
             android:layout_margin="16dp"
             android:background="@drawable/grid_background"
-            app:layout_constraintTop_toBottomOf="@id/gameStatusTextView"
+            app:layout_constraintTop_toBottomOf="@id/scoreTextView"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

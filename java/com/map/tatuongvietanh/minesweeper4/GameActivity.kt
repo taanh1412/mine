@@ -68,6 +68,11 @@ class GameActivity : AppCompatActivity() {
         gameViewModel.remainingMines.observe(this) { remainingMines ->
             binding.mineCounterTextView.text = "Mines: $remainingMines"
         }
+
+        // Observe score and update the score display
+        gameViewModel.score.observe(this) { score ->
+            binding.scoreTextView.text = "Score: $score"
+        }
     }
 
     private fun formatTime(seconds: Long): String {
@@ -126,7 +131,12 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun showEndGameDialog(isWin: Boolean) {
-        val message = if (isWin) "Congratulations! You won the game." else "Game Over! You hit a mine."
+        val score = gameViewModel.score.value ?: 0
+        val message = if (isWin) {
+            "Congratulations! You won the game.\nScore: $score"
+        } else {
+            "Game Over! You hit a mine.\nScore: $score"
+        }
 
         AlertDialog.Builder(this)
             .setTitle("Game Result")

@@ -23,6 +23,9 @@ class GameViewModel : ViewModel() {
     private val _remainingMines = MutableLiveData<Int>() // Mine counter
     val remainingMines: LiveData<Int> get() = _remainingMines
 
+    private val _score = MutableLiveData(0) // Score counter
+    val score: LiveData<Int> get() = _score
+
     private var timer: CountDownTimer? = null
 
     fun startGame(width: Int, height: Int, mineCount: Int) {
@@ -30,6 +33,7 @@ class GameViewModel : ViewModel() {
         _minefield.value = currentSession.minefield.tiles
         _remainingMines.value = mineCount
         _gameStatus.value = GameStatus.ONGOING
+        _score.value = 0 // Reset score at game start
         startTimer()
     }
 
@@ -58,6 +62,9 @@ class GameViewModel : ViewModel() {
         // Reveal the clicked tile
         tile.isRevealed = true
         _minefield.value = currentSession.minefield.tiles
+
+        // Add points for revealing a tile without a mine
+        _score.value = (_score.value ?: 0) + calculatePoints(tile)
 
         // If it's a mine, end the game with a loss
         if (tile.hasMine) {
@@ -102,10 +109,20 @@ class GameViewModel : ViewModel() {
             tile.isFlagged = !tile.isFlagged
             if (tile.isFlagged) {
                 _remainingMines.value = (_remainingMines.value ?: 0) - 1
+                _score.value = (_score.value ?: 0) + 10 // Add points for placing a flag
             } else {
                 _remainingMines.value = (_remainingMines.value ?: 0) + 1
+                _score.value = (_score.value ?: 0) - 10 // Deduct points for removing a flag
             }
             _minefield.value = currentSession.minefield.tiles // Update UI
+        }
+    }
+
+    private fun calculatePoints(tile: Tile): Int {
+        return when {
+            tile.hasMine -> 0 // No points for mines
+            tile.adjacentMines == 0 -> 20 // Higher points for revealing empty tiles
+            else -> 10 // Lower points for tiles with adjacent mines
         }
     }
 
@@ -117,6 +134,7 @@ class GameViewModel : ViewModel() {
 
     private fun endGame(win: Boolean) {
         stopTimer() // Stop the timer when the game ends
+        if (win) _score.value = (_score.value ?: 0) + 100 // Bonus points for winning
         _gameStatus.value = if (win) GameStatus.WON else GameStatus.LOST
     }
 
