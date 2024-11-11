@@ -15,7 +15,8 @@
             android:padding="16dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="25dp">
 
             <!-- Back Button -->
             <ImageButton
@@ -26,17 +27,38 @@
                 android:src="@drawable/ic_back"
                 app:tint="@android:color/white" />
 
-            <!-- Timer Text -->
-            <TextView
-                android:id="@+id/timerTextView"
+            <!-- Centered Timer and Mine Counter -->
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:orientation="vertical"
                 android:gravity="center"
-                android:text="Time: 00:00"
-                android:textSize="16sp"
-                android:textColor="@android:color/white"
-                android:paddingStart="8dp" />
+                android:layout_weight="1"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp">
+
+                <!-- Timer Text -->
+                <TextView
+                    android:id="@+id/timerTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Time: 00:00"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/white" />
+
+                <!-- Mine Counter Text -->
+                <TextView
+                    android:id="@+id/mineCounterTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Mines: 10"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/holo_red_light"
+                    android:layout_marginTop="4dp" />
+
+            </LinearLayout>
 
             <!-- Settings Button -->
             <ImageButton

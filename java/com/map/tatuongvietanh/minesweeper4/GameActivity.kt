@@ -1,16 +1,14 @@
-
 package com.map.tatuongvietanh.minesweeper4
 
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.util.TypedValue
-import android.view.ScaleGestureDetector
 import android.view.ViewGroup
-import android.widget.FrameLayout
+import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.map.tatuongvietanh.minesweeper4.databinding.ActivityGameBinding
+import com.map.tatuongvietanh.minesweeper4.model.GameStatus
 import com.map.tatuongvietanh.minesweeper4.model.Tile
 import com.map.tatuongvietanh.minesweeper4.view.CellView
 import com.map.tatuongvietanh.minesweeper4.viewmodel.GameViewModel
@@ -18,6 +16,7 @@ import com.map.tatuongvietanh.minesweeper4.viewmodel.GameViewModel
 class GameActivity : AppCompatActivity() {
     private lateinit var binding: ActivityGameBinding
     private val gameViewModel: GameViewModel by viewModels()
+    private var isViewOnlyMode = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,9 +45,35 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun setupObservers() {
+        // Observe minefield changes and update the grid
         gameViewModel.minefield.observe(this) { minefield ->
             updateGrid(minefield, calculateTileSize(minefield[0].size))
         }
+
+        // Observe game status to show end-game dialog
+        gameViewModel.gameStatus.observe(this) { status ->
+            when (status) {
+                GameStatus.WON -> showEndGameDialog(true)
+                GameStatus.LOST -> showEndGameDialog(false)
+                else -> {} // Do nothing if ongoing or view-only
+            }
+        }
+
+        // Observe time elapsed and update the timer display
+        gameViewModel.timeElapsed.observe(this) { time ->
+            binding.timerTextView.text = formatTime(time)
+        }
+
+        // Observe remaining mines and update the mine counter display
+        gameViewModel.remainingMines.observe(this) { remainingMines ->
+            binding.mineCounterTextView.text = "Mines: $remainingMines"
+        }
+    }
+
+    private fun formatTime(seconds: Long): String {
+        val minutes = seconds / 60
+        val remainingSeconds = seconds % 60
+        return String.format("%02d:%02d", minutes, remainingSeconds)
     }
 
     private fun setupGrid(columnCount: Int) {
@@ -75,17 +100,55 @@ class GameActivity : AppCompatActivity() {
     private fun updateGrid(minefield: Array<Array<Tile>>, tileSize: Int) {
         binding.gridLayout.removeAllViews() // Clear previous views if any
 
-        for (row in minefield) {
-            for (tile in row) {
+        for ((rowIndex, row) in minefield.withIndex()) {
+            for ((colIndex, tile) in row.withIndex()) {
                 val cellView = CellView(this).apply {
                     setTile(tile)
-                    onCellClickListener = { row, col ->
-                        gameViewModel.revealTile(row, col)
+                    onCellClickListener = { r, c ->
+                        if (!isViewOnlyMode) {
+                            gameViewModel.revealTile(r, c)
+                        } else {
+                            Toast.makeText(this@GameActivity, "View-only mode enabled", Toast.LENGTH_SHORT).show()
+                        }
                     }
                     layoutParams = ViewGroup.LayoutParams(tileSize, tileSize)
                 }
+
+                // Setting the onLongClickListener to handle flag toggling
+                cellView.setOnLongClickListener {
+                    gameViewModel.toggleFlag(rowIndex, colIndex) // Toggle flag on long press
+                    true // Return true to indicate the event is consumed
+                }
+
                 binding.gridLayout.addView(cellView)
             }
         }
+    }
+
+    private fun showEndGameDialog(isWin: Boolean) {
+        val message = if (isWin) "Congratulations! You won the game." else "Game Over! You hit a mine."
+
+        AlertDialog.Builder(this)
+            .setTitle("Game Result")
+            .setMessage(message)
+            .setPositiveButton("Restart") { _, _ ->
+                restartGame()
+            }
+            .setNegativeButton("Confirm") { _, _ ->
+                enterViewOnlyMode()
+            }
+            .setCancelable(false)
+            .show()
+    }
+
+    private fun restartGame() {
+        isViewOnlyMode = false
+        gameViewModel.restartGame()
+        setupGrid(gameViewModel.minefield.value?.size ?: 9)
+    }
+
+    private fun enterViewOnlyMode() {
+        isViewOnlyMode = true
+        gameViewModel.enterViewOnlyMode() // Update ViewModel to set view-only status if needed
     }
 }
